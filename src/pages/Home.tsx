@@ -11,7 +11,8 @@ import {
   Terminal, 
   Database,
   GraduationCap,
-  ChevronRight
+  ChevronRight,
+  Loader2
 } from 'lucide-react';
 import { SKILLS, PROJECTS, EXPERIENCES, EDUCATION, SOFT_SKILLS } from '../data';
 
@@ -388,7 +389,11 @@ export function Home() {
               disabled={isSubmitting}
               className="w-full bg-brand-cyan/10 border border-brand-cyan text-brand-cyan font-bold uppercase tracking-wider py-3 hover:bg-brand-cyan hover:text-[#0B1120] transition-colors rounded-sm text-sm flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Mail className="w-4 h-4" />
+              {isSubmitting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Mail className="w-4 h-4" />
+              )}
               <span>{isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}</span>
             </button>
             
