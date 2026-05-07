@@ -35,6 +35,7 @@ export default function App() {
               <a href="/#skills" className="hover:text-brand-cyan transition-colors">_Skills</a>
               <a href="/#projects" className="hover:text-brand-cyan transition-colors">_Projects</a>
               <a href="/#experience" className="hover:text-brand-cyan transition-colors">_Experience</a>
+              <a href="/#contact" className="hover:text-brand-cyan transition-colors">_Contact</a>
             </nav>
           </div>
         </header>

@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 import { 
   Github, 
   Linkedin, 
@@ -38,6 +39,39 @@ function useTypewriter(text: string, speed = 50) {
 
 export function Home() {
   const typedTitle = useTypewriter("Data Engineer | Data Analyste | Data Architect", 60);
+
+  const form = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!form.current) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          setIsSubmitting(false);
+          setSubmitStatus('success');
+          form.current?.reset();
+          setTimeout(() => setSubmitStatus('idle'), 5000);
+        },
+        (error) => {
+          console.error('FAILED...', error.text);
+          setIsSubmitting(false);
+          setSubmitStatus('error');
+        }
+      );
+  };
 
   return (
     <main className="max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-32">
@@ -280,6 +314,91 @@ export function Home() {
             </div>
           </div>
           
+        </motion.div>
+      </section>
+
+      {/* CONTACT SECTION */}
+      <section id="contact" className="scroll-mt-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }}
+          className="max-w-2xl mx-auto space-y-8 bg-slate-900/40 border border-slate-800 p-8 rounded-sm"
+        >
+          <div className="text-center space-y-4">
+            <h2 className="text-xs font-bold text-brand-purple uppercase tracking-tighter">
+              // Contact
+            </h2>
+            <h3 className="text-2xl font-bold text-white uppercase tracking-tight">Prêt à collaborer ?</h3>
+            <p className="text-sm text-slate-400 font-sans">
+              N'hésitez pas à me contacter pour discuter de vos données et de la façon dont nous pourrions travailler ensemble.
+            </p>
+          </div>
+
+          <form ref={form} className="space-y-4" onSubmit={sendEmail}>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-xs text-brand-cyan uppercase tracking-wider">Nom</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="user_name"
+                  required
+                  className="w-full bg-[#0F0F1A] border border-slate-700 p-3 rounded-sm text-white focus:outline-none focus:border-brand-purple transition-colors font-sans text-sm"
+                  placeholder="John Doe"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-xs text-brand-cyan uppercase tracking-wider">Email</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="user_email"
+                  required
+                  className="w-full bg-[#0F0F1A] border border-slate-700 p-3 rounded-sm text-white focus:outline-none focus:border-brand-purple transition-colors font-sans text-sm"
+                  placeholder="john@example.com"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="subject" className="text-xs text-brand-cyan uppercase tracking-wider">Sujet</label>
+              <input 
+                type="text" 
+                id="subject" 
+                name="subject"
+                required
+                className="w-full bg-[#0F0F1A] border border-slate-700 p-3 rounded-sm text-white focus:outline-none focus:border-brand-purple transition-colors font-sans text-sm"
+                placeholder="Proposition de mission"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="message" className="text-xs text-brand-cyan uppercase tracking-wider">Message</label>
+              <textarea 
+                id="message"
+                name="message" 
+                required
+                rows={5}
+                className="w-full bg-[#0F0F1A] border border-slate-700 p-3 rounded-sm text-white focus:outline-none focus:border-brand-purple transition-colors font-sans text-sm resize-none"
+                placeholder="Votre message..."
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-brand-cyan/10 border border-brand-cyan text-brand-cyan font-bold uppercase tracking-wider py-3 hover:bg-brand-cyan hover:text-[#0B1120] transition-colors rounded-sm text-sm flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Mail className="w-4 h-4" />
+              <span>{isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}</span>
+            </button>
+            
+            {submitStatus === 'success' && (
+              <p className="text-brand-cyan text-sm text-center">Votre message a été envoyé avec succès !</p>
+            )}
+            {submitStatus === 'error' && (
+              <p className="text-brand-purple text-sm text-center">Une erreur s'est produite lors de l'envoi. Veuillez réessayer.</p>
+            )}
+          </form>
         </motion.div>
       </section>
 
