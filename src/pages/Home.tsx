@@ -37,7 +37,7 @@ function useTypewriter(text: string, speed = 50) {
 }
 
 export function Home() {
-  const typedTitle = useTypewriter("Data Analyste | Machine Learning & Analytics", 60);
+  const typedTitle = useTypewriter("Data Engineer | Data Analyste | Data Architect", 60);
 
   return (
     <main className="max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-32">
