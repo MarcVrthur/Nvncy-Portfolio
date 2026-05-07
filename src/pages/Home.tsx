@@ -49,15 +49,25 @@ export function Home() {
     e.preventDefault();
     if (!form.current) return;
 
+    const serviceId = 'service_h0xmuo8';
+    const templateId = 'template_tboj8cn';
+    const publicKey = 'iJ6LVZtszME8jmI86';
+
+    if (!serviceId || !templateId || !publicKey) {
+      alert("⚠️ Configuration EmailJS manquante.");
+      setIsSubmitting(false);
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     emailjs
       .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        serviceId,
+        templateId,
         form.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        publicKey
       )
       .then(
         () => {
