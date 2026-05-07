@@ -12,7 +12,7 @@ import {
   GraduationCap,
   ChevronRight
 } from 'lucide-react';
-import { SKILLS, PROJECTS, EXPERIENCES } from '../data';
+import { SKILLS, PROJECTS, EXPERIENCES, EDUCATION, SOFT_SKILLS } from '../data';
 
 // Hook personnalisé pour l'effet typewriter
 function useTypewriter(text: string, speed = 50) {
@@ -37,7 +37,7 @@ function useTypewriter(text: string, speed = 50) {
 }
 
 export function Home() {
-  const typedTitle = useTypewriter("Data Developer | Machine Learning & Analytics", 60);
+  const typedTitle = useTypewriter("Data Analyste | Machine Learning & Analytics", 60);
 
   return (
     <main className="max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-32">
@@ -56,8 +56,8 @@ export function Home() {
           </div>
           
           <div className="border-l-2 border-brand-purple pl-6 py-2">
-            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight mb-2">
-              Data Developer<span className="text-brand-cyan">_</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight mb-2 uppercase">
+              Nancy Prisca Dobé<span className="text-brand-cyan">.</span>
             </h1>
             
             <div className="text-lg md:text-2xl font-bold text-brand-purple uppercase tracking-wide min-h-[40px]">
@@ -65,8 +65,7 @@ export function Home() {
             </div>
             
             <p className="mt-4 max-w-sm text-sm md:text-base text-slate-400 font-sans leading-relaxed">
-              Je construis des pipelines robustes, j'entraîne des modèles intelligents 
-              et je conçois des systèmes data qui résolvent de vrais problèmes.
+              Expérience confirmée en analyse de données commerciales, conception de tableaux de bord interactifs et formulation de recommandations stratégiques.
             </p>
           </div>
 
@@ -78,10 +77,10 @@ export function Home() {
             <a href="https://github.com" target="_blank" rel="noreferrer" className="p-3 border border-slate-800 hover:border-brand-cyan hover:text-brand-cyan transition-colors rounded-sm">
               <Github className="w-5 h-5" />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="p-3 border border-slate-800 hover:border-brand-cyan hover:text-brand-cyan transition-colors rounded-sm">
+            <a href="https://linkedin.com/in/nancy-prisca-dobe-167687222" target="_blank" rel="noreferrer" className="p-3 border border-slate-800 hover:border-brand-cyan hover:text-brand-cyan transition-colors rounded-sm">
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="mailto:email@example.com" className="p-3 border border-slate-800 hover:text-white transition-colors rounded-sm">
+            <a href="mailto:nancydobe3@gmail.com" className="p-3 border border-slate-800 hover:text-white transition-colors rounded-sm">
               <Mail className="w-5 h-5" />
             </a>
           </div>
@@ -101,18 +100,18 @@ export function Home() {
           <div className="grid md:grid-cols-3 gap-12 text-slate-400 font-sans font-light leading-relaxed">
             <div className="md:col-span-2 space-y-4">
               <p>
-                Passionnée par la transformation de données brutes en insights actionnables. 
-                Je navigue entre l'ingénierie des données pour garantir des flux fiables, 
-                et le machine learning pour en extraire la quintessence.
+                Data Analyste avec une expérience confirmée en analyse de données commerciales, 
+                conception de tableaux de bord interactifs (Power BI) et formulation 
+                de recommandations stratégiques.
               </p>
               <p>
-                Mon approche combine la rigueur du génie logiciel 
-                avec l'intuition de l'analyste. J'aime concevoir des architectures qui scalent 
-                et des modèles qui performent en conditions réelles.
+                Je suis spécialisée dans la transformation de données brutes en insights 
+                actionnables pour faciliter la prise de décision. Actuellement en stage 
+                chez SACO sur des missions de reporting opérationnel dans la filière cacao.
               </p>
               <div className="flex items-center space-x-2 text-brand-cyan font-mono text-sm pt-4">
                 <MapPin className="w-4 h-4" />
-                <span>Basée à Abidjan, Côte d'ivoire</span>
+                <span>Basée à Cocody Angré, Côte d'Ivoire</span>
               </div>
             </div>
             
@@ -244,23 +243,40 @@ export function Home() {
               // Formation
             </h2>
             
-            <div className="bg-slate-900/40 border border-slate-800 p-5 rounded-sm relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <GraduationCap className="w-16 h-16 text-brand-purple" />
-              </div>
-              <div className="relative z-10 space-y-3">
-                <div className="flex items-center space-x-2 text-brand-purple">
-                  <GraduationCap className="w-4 h-4" />
-                  <span className="text-[10px] uppercase font-bold tracking-tighter">Diplôme Universitaire</span>
+            <div className="space-y-4">
+              {EDUCATION.map((edu, idx) => (
+                <div key={idx} className="bg-slate-900/40 border border-slate-800 p-5 rounded-sm relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <GraduationCap className="w-16 h-16 text-brand-purple" />
+                  </div>
+                  <div className="relative z-10 space-y-3">
+                    <div className="flex items-center space-x-2 text-brand-purple">
+                      <GraduationCap className="w-4 h-4" />
+                      <span className="text-[10px] uppercase font-bold tracking-tighter">Diplôme</span>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white mb-1">{edu.degree}</h3>
+                      <p className="text-[10px] text-slate-500 italic">{edu.school} — {edu.period}</p>
+                    </div>
+                    {edu.description && (
+                      <p className="text-[11px] text-slate-400 font-sans pt-3 border-t border-slate-800">
+                        {edu.description}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white mb-1">Master Informatique & Science des données</h3>
-                  <p className="text-[10px] text-slate-500 italic">Université de [Nom de l'Université] — 2020</p>
-                </div>
-                <p className="text-[11px] text-slate-400 font-sans pt-3 border-t border-slate-800">
-                  Spécialisation en architectures Big Data, modélisation prédictive et optimisation algorithmique.
-                </p>
-              </div>
+              ))}
+            </div>
+
+            <h2 className="text-xs font-bold text-brand-cyan uppercase mb-4 mt-8 tracking-tighter">
+              // Soft Skills
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {SOFT_SKILLS.map((skill, idx) => (
+                <span key={idx} className="inline-block px-3 py-1.5 bg-slate-800/50 text-xs text-slate-300 border border-slate-700/50 rounded-sm">
+                  {skill}
+                </span>
+              ))}
             </div>
           </div>
           
